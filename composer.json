@@ -1,0 +1,24 @@
+{
+  "name": "zkrat/draw-ohlc",
+  "description": "Tool to draw OHLC data to image",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "zkrat",
+      "email": "hajek@zkrat.net"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "nette/utils": "^3.0",
+    "tracy/tracy": "^2.6",
+    "nette/robot-loader": "^3.2"
+  }
+}
