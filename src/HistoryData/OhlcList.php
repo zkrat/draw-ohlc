@@ -264,39 +264,6 @@ class OhlcList extends DataCollection {
 	}
 
 
-	public function countData( OhlcList $cacheOhlcList=null ) {
-		foreach ($this->data as $ohlc){
-			/**
-			 * @var Ohlc $ohlc
-			 */
-			// TODO: less request
-
-
-			if ( $cacheOhlcList instanceof OhlcList && $cacheOhlcList->hasOhlcByDatetime($ohlc->getDatetime())){
-				$ohlcChache=$cacheOhlcList->getOhlcByDatetime($ohlc->getDatetime());
-				if (!$ohlcChache->isSame($ohlc)){
-					$this->updateArray[]=$ohlc->getArray();
-				}
-			}else{
-				$this->insertArray[]=$ohlc->getArray();
-			}
-
-		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getInsertArray(): array {
-		return $this->insertArray;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getUpdateArray(): array {
-		return $this->updateArray;
-	}
 
 	public function getVolumeArray() {
 		return $this->volumeArray;
