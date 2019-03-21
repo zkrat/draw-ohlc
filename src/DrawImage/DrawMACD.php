@@ -124,4 +124,11 @@ class DrawMACD extends AbstractDrawIndicator {
 		return $this->drawOhlcList;
 	}
 
+	/**
+	 * @return MACD
+	 */
+	public function getMacd(): MACD {
+		return $this->macd;
+	}
+
 }
