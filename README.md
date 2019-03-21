@@ -7,6 +7,11 @@ Install:
 composer require zkrat/draw-ohlc
 ```
 
+Extra require:
+```
+**PECL trader**
+```
+
 
 ![First example OHLC](https://raw.githubusercontent.com/zkrat/draw-ohlc/master/example/ohlc1.png)
 
