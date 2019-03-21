@@ -17,8 +17,6 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "nette/utils": "^3.0",
-    "tracy/tracy": "^2.6",
-    "nette/robot-loader": "^3.2"
+    "nette/utils": "^2.4 || ^3.0",
   }
 }
