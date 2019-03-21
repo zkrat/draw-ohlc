@@ -7,9 +7,9 @@ Install:
 composer require zkrat/draw-ohlc
 ```
 
-Extra require:
+**Extra require:**
 ```
-**PECL trader**
+PECL trader
 ```
 
 
