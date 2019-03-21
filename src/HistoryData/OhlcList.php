@@ -65,15 +65,6 @@ class OhlcList extends DataCollection {
 	/**
 	 * @var array
 	 */
-	private $insertArray=[];
-
-	/**
-	 * @var array
-	 */
-	private $updateArray=[];
-	/**
-	 * @var array
-	 */
 	private $volumeArray=[];
 	/**
 	 * @var int
