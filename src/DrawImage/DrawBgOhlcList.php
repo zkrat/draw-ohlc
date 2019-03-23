@@ -95,8 +95,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 		$priceArray=$this->getPostionPriceArray();
 
 
-		$x1=$this->getX1();
-		$x2=$this->getX2();
+		$x1=$this->drawOhlcList->getX1();
+		$x2=$this->drawOhlcList->getX2();
 		$multiplicator=$this->getDrawOhlcList()->getOhlcList()->getMultipicator();
 		foreach ($priceArray as $price){
 			$y =$this->drawOhlcList->countY($price);
@@ -208,11 +208,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 		return $this;
 	}
 
-	public function setUnits( string $string,$format='%f', $suffix=false ):DrawBgOhlcList {
-		if(!$suffix)
-			$this->units=$string.$format;
-		else
-			$this->units=$format.$string;
+	public function setUnits( $format='%f'):DrawBgOhlcList {
+		$this->units=$format;
 
 		return $this;
 

@@ -17,6 +17,8 @@ class RSI extends AbstractSingleValue {
 
 	const SUB_CLASS_NAME='DrawOHLC\Indicators\RSI\RSIOhlc';
 
+	protected $postProcessValues=false;
+
 
 	public function getLabel() {
 		return 'RSI'.$this->length;

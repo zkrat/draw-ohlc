@@ -33,11 +33,11 @@ abstract class AbstractDrawIndicator extends AbstractDrawCanvas {
 		}else{
 			$this->drawOhlcList=$drawOhlcList;
 		}
-		$drawOhlcList->createSpaceBottom($height+$offset);
-		$drawOhlcList->addDrawCanvas($this);
+		$this->drawOhlcList->createSpaceBottom($height+$offset);
+		$this->drawOhlcList->addDrawCanvas($this);
 
 
-		$this->setOffset(0,$drawOhlcList->getHeight());
+		$this->setOffset(0,$this->drawOhlcList->getHeight());
 
 		$this->height=$height;
 		$this->width=$drawOhlcList->getWidth();

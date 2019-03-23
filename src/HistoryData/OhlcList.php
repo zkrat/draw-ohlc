@@ -214,7 +214,7 @@ class OhlcList extends DataCollection {
 
 	public static function multipicator($array,$multiplicator){
 			if ($multiplicator!==1){
-				$array=ArrayHelper::multipicator($array,$multiplicator);
+				$array=ArrayHelper::multipicator($array,$multiplicator,true);
 			}
 			return $array;
 	}

@@ -252,7 +252,9 @@ class DrawOhlcList extends AbstractDrawCanvas {
 	}
 
 	public function testMinValue( $value ) {
-		if (is_null($this->minLow))
+		if($value==0)
+			return null;
+		elseif (is_null($this->minLow))
 			$this->minLow=$value;
 		else
 			$this->minLow=min($this->minLow,$value);

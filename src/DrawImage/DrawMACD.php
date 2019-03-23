@@ -100,10 +100,6 @@ class DrawMACD extends AbstractDrawIndicator {
 			$x2=$x1;
 			$slowY2=$slowY1;
 			$fastY2=$fastY1;
-
-
-
-
 		}
 
 
@@ -122,6 +118,13 @@ class DrawMACD extends AbstractDrawIndicator {
 			return $this->drawOhlcList->getDrawOhlcList();
 
 		return $this->drawOhlcList;
+	}
+
+	/**
+	 * @return MACD
+	 */
+	public function getMacd(): MACD {
+		return $this->macd;
 	}
 
 }

@@ -29,6 +29,11 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 
 	protected $maxValue;
 
+	protected $preProcessValues=true;
+
+
+	protected $postProcessValues=true;
+
 	const FUNCTION_NAME='_functionName';
 	const SUB_CLASS_NAME='ClassName';
 
@@ -40,11 +45,10 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 	}
 
 	private function load() {
-		$array =$this->getPreValues();
+		if ($this->preProcessValues===TRUE)
+			$array =$this->getPreValues();
 		$arrayValues =call_user_func($this::FUNCTION_NAME,$array,$this->length);
-
-
-		if(is_array($arrayValues))
+		if(is_array($arrayValues) && $this->postProcessValues===TRUE)
 			$arrayValues = $this->getPostValues($arrayValues);
 
 		foreach ($this->ohlcList as $ohlc){
@@ -92,7 +96,6 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 
 	protected function getPreValues() {
 		return $this->ohlcList->getCloseArray($this->ohlcList->getMultipicator());
-
 	}
 
 

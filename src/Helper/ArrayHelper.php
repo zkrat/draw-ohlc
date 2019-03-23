@@ -52,11 +52,14 @@ class ArrayHelper {
 		return $returnArray;
 	}
 
-	public static function multipicator( array $array, float $multiplicator=1 ):array {
+	public static function multipicator( array $array, float $multiplicator=1,$floor=false ):array {
 		if ($multiplicator!==1){
 			foreach ($array as $key=>  &$value){
 				if(is_numeric($value)){
-					$value=floor($value*$multiplicator);
+					if($floor)
+						$value=floor($value*$multiplicator);
+					else
+						$value=floor($value)*$multiplicator;
 				}
 
 			}
