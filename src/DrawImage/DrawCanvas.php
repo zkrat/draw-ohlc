@@ -43,7 +43,7 @@ class DrawCanvas extends AbstractDrawCanvas{
 		if(is_null($bgColor))
 			$bgColor=$parentCanvas->getBgColor();
 
-		$class          = new static($width,$height,$bgColor);
+		$class = new static($width,$height,$bgColor);
 
 		$parentCanvas->addDrawCanvas($class);
 		$class->setOffset($offsetX,$offsetY);

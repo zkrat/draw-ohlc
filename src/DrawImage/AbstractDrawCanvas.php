@@ -94,8 +94,10 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 
 	public function setParent(AbstractDrawCanvas $drawCanvas  ){
 		$this->parent=$drawCanvas;
-		$this->width=$drawCanvas->getWidth();
-		$this->height=$drawCanvas->getHeight();
+		if(is_null($this->width))
+			$this->width=$drawCanvas->getWidth();
+		if(is_null($this->height))
+			$this->height=$drawCanvas->getHeight();
 		$this->absolutOffsetY=$drawCanvas->getAbsolutOffsetY();
 		$this->absolutOffsetX=$drawCanvas->getAbsolutOffsetX();
 		$this->setFontPath($drawCanvas->getFontPath());
