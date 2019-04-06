@@ -30,6 +30,8 @@ class OhlcList extends DataCollection {
 
 	protected $multipicator=1;
 
+	private $timeFrameLength;
+
 
 	/**
 	 * @var array
@@ -273,6 +275,16 @@ class OhlcList extends DataCollection {
 
 	public function setMultipicator(float $multipicator) {
 		$this->multipicator=$multipicator;
+	}
+
+	public function getTimeFrameSecondsLength() {
+		if($this->firstOhlc->hasNextOhlc() && is_null($this->timeFrameLength)){
+			$this->timeFrameLength = $this->firstOhlc->getNextOhlc()->getDatetime()->getTimestamp();
+			$this->timeFrameLength  -= $this->firstOhlc->getDatetime()->getTimestamp();
+		}elseif (is_null($this->timeFrameLength)){
+			$this->timeFrameLength=0;
+		}
+		return $this->timeFrameLength;
 	}
 
 }
