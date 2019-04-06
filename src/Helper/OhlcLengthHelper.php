@@ -16,7 +16,7 @@ class OhlcLengthHelper {
 	const DAY=86400;
 	const WEEK=604800;
 
-	public static function getStrintg(int $seconds ) {
+	public static function getTimeFrame(int $seconds ) {
 		if ($seconds<OhlcLengthHelper::MINUTE)
 			return $seconds.'s';
 		elseif ($seconds<OhlcLengthHelper::HOUR){
@@ -29,7 +29,7 @@ class OhlcLengthHelper {
 			return round($seconds/OhlcLengthHelper::DAY).'D';
 		}
 
-		return '~?';
+		return '~'.$seconds.'s';
 	}
 
 }

@@ -47,6 +47,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 
 	private $dateFormat='Y-m-d G:i';
 
+	protected $timeFrame;
+
 
 	protected function __construct(DrawOhlcList $drawOhlcList) {
 		$this->drawOhlcList  =$drawOhlcList;
@@ -130,10 +132,9 @@ class DrawBgOhlcList extends DrawOhlcList {
 		$lastOhlc=$this->drawOhlcList->getOhlcList()->getOhlcByPostion($lastPostion);
 		$to =$lastOhlc->getDatetime()->format($this->dateFormat);
 
-		if($lastOhlc->hasPrevOhlc()){
+		if($lastOhlc->hasPrevOhlc() && is_null($this->timeFrame)){
 			$timeDiff =$lastOhlc->getDatetime()->getTimestamp()- $lastOhlc->getPrevOhlc()->getDatetime()->getTimestamp();
-			dump(OhlcLengthHelper::getStrintg($timeDiff),$timeDiff/OhlcLengthHelper::HOUR);
-			die;
+			$this->timeFrame=OhlcLengthHelper::getTimeFrame($timeDiff);
 		}
 
 
@@ -157,7 +158,7 @@ class DrawBgOhlcList extends DrawOhlcList {
 
 
 		$this->getImage()->ttfText($fontSize,0,$xm,$ym,$this->colorTimeline,$this->fontPath, $text);
-		$this->getImage()->ttfText($this->fontSize,0,$x,$y,$this->colorTimeline,$this->fontPath, $textFromTo);
+		$this->getImage()->ttfText($this->fontSize,0,$x,$y,$this->colorTimeline,$this->fontPath, $textFromTo.' '.$this->timeFrame);
 	}
 
 	private function getProductName(){
@@ -222,6 +223,16 @@ class DrawBgOhlcList extends DrawOhlcList {
 
 		return $this;
 
+	}
+
+	/**
+	 * @param mixed $timeFrame
+	 *
+	 * @return DrawBgOhlcList
+	 */
+	public function setTimeFrame( $timeFrame ):DrawBgOhlcList {
+		$this->timeFrame = $timeFrame;
+		return $this;
 	}
 
 
