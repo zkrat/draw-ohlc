@@ -23,7 +23,7 @@ class OhlcLengthHelper {
 			return round($seconds/OhlcLengthHelper::MINUTE).'m';
 		}
 		elseif ($seconds<OhlcLengthHelper::DAY){
-			return round($seconds/OhlcLengthHelper::HOUR).'D';
+			return round($seconds/OhlcLengthHelper::HOUR).'H';
 		}
 		elseif ($seconds<OhlcLengthHelper::WEEK){
 			return round($seconds/OhlcLengthHelper::DAY).'D';

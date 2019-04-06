@@ -10,6 +10,7 @@ namespace DrawOHLC\DrawImage;
 
 
 use DrawOHLC\Helper\FontHelper;
+use DrawOHLC\Helper\OhlcLengthHelper;
 use DrawOHLC\HistoryData\OhlcList;
 use DrawOHLC\DrawImage\Exception\DrawBgOhlcListException;
 use Nette\Utils\Image;
@@ -126,7 +127,15 @@ class DrawBgOhlcList extends DrawOhlcList {
 		$fistPostion = $this->drawOhlcList->getFirstDrawPosition();
 		$lastPostion = $this->drawOhlcList->getOhlcList()->count();
 		$from =$this->drawOhlcList->getOhlcList()->getOhlcByPostion($fistPostion)->getDatetime()->format($this->dateFormat);
-		$to =$this->drawOhlcList->getOhlcList()->getOhlcByPostion($lastPostion)->getDatetime()->format($this->dateFormat);
+		$lastOhlc=$this->drawOhlcList->getOhlcList()->getOhlcByPostion($lastPostion);
+		$to =$lastOhlc->getDatetime()->format($this->dateFormat);
+
+		if($lastOhlc->hasPrevOhlc()){
+			$timeDiff =$lastOhlc->getDatetime()->getTimestamp()- $lastOhlc->getPrevOhlc()->getDatetime()->getTimestamp();
+			dump(OhlcLengthHelper::getStrintg($timeDiff),$timeDiff/OhlcLengthHelper::HOUR);
+			die;
+		}
+
 
 
 		$fontSize=ceil($this->fontSize*1.3);
