@@ -67,7 +67,7 @@ class OhlcList extends DataCollection {
 	/**
 	 * @var array
 	 */
-	private $volumeArray=[];
+	protected $volumeArray=[];
 	/**
 	 * @var int
 	 */
