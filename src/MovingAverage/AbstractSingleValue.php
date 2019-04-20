@@ -47,6 +47,8 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 	private function load() {
 		if ($this->preProcessValues===TRUE)
 			$array =$this->getPreValues();
+		else
+			$array =$this->ohlcList->getCloseArray();
 		$arrayValues =call_user_func($this::FUNCTION_NAME,$array,$this->length);
 		if(is_array($arrayValues) && $this->postProcessValues===TRUE)
 			$arrayValues = $this->getPostValues($arrayValues);
