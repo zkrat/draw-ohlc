@@ -84,7 +84,7 @@ abstract class AbstractSingleValueOhlc {
 	/**
 	 * @return bool
 	 */
-	public function hasPost():bool{
+	public function hasNext():bool{
 		$position=$this->getPosition()+1;
 		return $this->parent->hasPosition($position);
 	}
@@ -94,7 +94,7 @@ abstract class AbstractSingleValueOhlc {
 		return $this->parent->getPosition($position);
 	}
 
-	public function getPost(){
+	public function getNext():AbstractSingleValueOhlc{
 		$position=$this->getPosition()+1;
 		return $this->parent->getPosition($position);
 	}

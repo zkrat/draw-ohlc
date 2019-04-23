@@ -113,7 +113,7 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 		return isset($this->data[$position]);
 	}
 
-	public function getPosition($position){
+	public function getPosition($position):AbstractSingleValueOhlc{
 		return $this->data[$position];
 	}
 
