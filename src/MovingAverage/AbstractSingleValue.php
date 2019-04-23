@@ -119,4 +119,11 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 
 	abstract public function getLabel() ;
 
+	/**
+	 * @return OhlcList
+	 */
+	public function getOhlcList(): OhlcList {
+		return $this->ohlcList;
+	}
+
 }
