@@ -262,4 +262,11 @@ class Ohlc {
 		$this->tradesCount==$ohlc->getTradesCount();
 	}
 
+	public function isLast() {
+		return !$this->hasNextOhlc();
+	}
+
+	public function isFirst() {
+		return !$this->hasPrevOhlc();
+	}
 }
