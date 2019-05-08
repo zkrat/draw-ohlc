@@ -50,6 +50,12 @@ class DrawRSI extends AbstractDrawIndicator {
 		return $this->height;
 	}
 
+	public function countY($value):int{
+		$pxHeight=$this->getY2()-$this->getY1();
+		$pxRatio=$pxHeight/100;
+		return intval(round($this->getY2()-$pxRatio*$value));
+	}
+
 	public function draw() {
 
 		$pxHeight=$this->getY2()-$this->getY1();
@@ -60,7 +66,10 @@ class DrawRSI extends AbstractDrawIndicator {
 		$this->getImage()->line($this->getX1(),$y1,$this->getX2(),$y1,$this->color);
 		$this->getImage()->line($this->getX1(),$y2,$this->getX2(),$y2,$this->color);
 		$x1=$x2=$y1=$y2=null;
-		$xCentre=round($this->drawOhlcList->getCandelBodyWidth()/2);
+
+		if(is_int($this->thickness))
+			$this->getImage()->setThickness($this->thickness);
+
 		foreach ($this->rsi as $rsiOhlc){
 			/**
 			 * @var RSIOhlc $rsiOhlc
@@ -71,8 +80,9 @@ class DrawRSI extends AbstractDrawIndicator {
 
 			if($drawOhlc->isDrawPostion() && !$rsiOhlc instanceof UncountableSingleValueOhlc){
 
-				$x2=intval(round($drawOhlc->getAbsolutOffsetX()+$xCentre));
-				$y2=intval(round($this->getY2()-$pxRatio*$rsiOhlc->getValue()));
+				$x2=$drawOhlc->getOffsetX();
+
+				$y2=$this->countY($rsiOhlc->getValue());
 				if ( !is_null($x1)&& !is_null($x2) && !is_null($y1) && !is_null($y2))
 					$this->getImage()->line($x1,$y1,$x2,$y2,$this->color);
 
@@ -81,8 +91,9 @@ class DrawRSI extends AbstractDrawIndicator {
 			}
 
 		}
-//		$black=Image::rgb(0,0,0);
-//		$this->getImage()->ttfText($size,0,$volumeX,$volumeY,$black,ARIAL_FONT_DIR,'Max. volume: '.$volume);
+
+		if(is_int($this->thickness))
+			$this->getImage()->setThickness(1);
 
 		parent::draw();
 		$x=$this->getX1()+2;

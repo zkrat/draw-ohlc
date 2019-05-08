@@ -11,7 +11,6 @@ namespace DrawOHLC\DrawImage;
 
 
 use DrawOHLC\HistoryData\Ohlc;
-use Nette\Utils\Image;
 
 class DrawOhlc extends AbstractDrawCanvas {
 
@@ -43,6 +42,14 @@ class DrawOhlc extends AbstractDrawCanvas {
 		return new static($ohlc,$drawOhlcList);
 	}
 
+	public function getOhlcX(){
+		return $this->getOffsetX();
+	}
+
+	public function getOhlcXCenter(){
+		return round($this->getAbsolutOffsetX() + $this->drawOhlcList->getWickOffset() + $this->drawOhlcList->getWickWidth()/2);
+	}
+
 	public function draw() {
 
 
@@ -50,8 +57,8 @@ class DrawOhlc extends AbstractDrawCanvas {
 
 
 
-			$wickX1=$this->getAbsolutOffsetX()+$this->drawOhlcList->getCandelWickWidth()+1;
-			$wickX2=$wickX1+$this->drawOhlcList->getCandelWickWidth();
+			$wickX1=$this->getAbsolutOffsetX() + $this->drawOhlcList->getWickOffset();
+			$wickX2=$wickX1+$this->drawOhlcList->getWickWidth();
 			$wickY1=$this->drawOhlcList->countY($this->ohlc->getHigh());
 			$wickY2=$this->drawOhlcList->countY($this->ohlc->getLow());
 

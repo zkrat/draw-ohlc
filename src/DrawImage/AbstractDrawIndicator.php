@@ -20,6 +20,11 @@ abstract class AbstractDrawIndicator extends AbstractDrawCanvas {
 	/**
 	 * @var int
 	 */
+	protected $thickness;
+
+	/**
+	 * @var int
+	 */
 	protected $length;
 
 	protected function __construct(int $height=30,DrawOhlcList $drawOhlcList,int $length=null) {
@@ -48,5 +53,10 @@ abstract class AbstractDrawIndicator extends AbstractDrawCanvas {
 
 	abstract protected function loadIndicator();
 
+
+	public function setThickness(int $thickness){
+		$this->thickness=$thickness;
+		return $this;
+	}
 
 }

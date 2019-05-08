@@ -11,6 +11,7 @@ namespace DrawOHLC\DrawImage;
 
 use DrawOHLC\HistoryData\Ohlc;
 use DrawOHLC\HistoryData\OhlcList;
+use Helper\Math;
 use Nette\Utils\Image;
 
 class DrawOhlcList extends AbstractDrawCanvas {
@@ -28,7 +29,6 @@ class DrawOhlcList extends AbstractDrawCanvas {
 	protected static $borderWidth=DrawOhlcList::BORDER_WIDTH;
 
 	protected static $candelBodyWidth=DrawOhlcList::CANDEL_BODY_WIDTH;
-	protected $candelWickWidth=DrawOhlcList::CANDEL_WICK_WIDTH;
 
 	/**
 	 * @var OhlcList
@@ -49,6 +49,16 @@ class DrawOhlcList extends AbstractDrawCanvas {
 	protected $minVolume;
 
 	protected $wickColor;
+
+	/**
+	 * @var int
+	 */
+	protected $wickWidth=1;
+
+	/**
+	 * @var int
+	 */
+	protected $wickOffset=1;
 
 	/**
 	 * @return mixed
@@ -222,21 +232,17 @@ class DrawOhlcList extends AbstractDrawCanvas {
 			$borderTotalWidth      =($count+1)*self::$borderWidth;
 			self::$candelBodyWidth =max(self::$candelBodyWidth,floor( ( $this->getWidth() - $borderTotalWidth) / $count));
 		}
-	}
 
-	/**
-	 * @return string
-	 */
-	public function getCandelWickWidth(): string {
-		return $this->candelWickWidth;
-	}
-
-	/**
-	 * @param string $candelWickWidth
-	 */
-	public function setCandelWickWidth( string $candelWickWidth ): DrawOhlcList {
-		$this->candelWickWidth = $candelWickWidth;
-		return $this;
+		$wickWidth=self::$candelBodyWidth/3;
+		$wickWidthDown=Math::roundDown($wickWidth);
+		$wickWidthUp=Math::roundUp($wickWidth);
+		if ($wickWidthDown*2+$wickWidthUp==self::$candelBodyWidth){
+			$this->wickOffset=$wickWidthDown;
+			$this->wickWidth =$wickWidthUp;
+		}elseif ($wickWidthDown+$wickWidthUp*2==self::$candelBodyWidth){
+			$this->wickOffset = $wickWidthUp;
+			$this->wickWidth  = $wickWidthDown;
+		}
 	}
 
 	public function getDrawOhlcByPosition( $postion ):DrawOhlc {
@@ -289,5 +295,21 @@ class DrawOhlcList extends AbstractDrawCanvas {
 		$this->wickColor = $wickColor;
 		return $this;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getWickWidth():int {
+		return $this->wickWidth;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getWickOffset():int {
+		return $this->wickOffset;
+	}
+
+
 
 }

@@ -71,7 +71,7 @@ class DrawSingleValue  extends AbstractDrawCanvas {
 
 				$drawOhlc=$this->drawOhlcList->getDrawOhlcByPosition($position);
 
-				$x1=$drawOhlc->getX1() + $this->drawOhlcList->getCandelWickWidth();
+				$x1=$drawOhlc->getX1() + $this->drawOhlcList->getWickWidth();
 				$y1=$this->drawOhlcList->countY($singleValueOhlc->getValue());
 
 				if(isset($x2) && isset($y2)){
