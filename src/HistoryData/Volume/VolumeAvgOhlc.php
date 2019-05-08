@@ -9,30 +9,19 @@ namespace DrawOHLC\HistoryData\Volume;
 
 
 use DrawOHLC\HistoryData\Ohlc;
+use DrawOHLC\MovingAverage\AbstractSingleValueOhlc;
 
-class VolumeAvgOhlc {
+class VolumeAvgOhlc extends AbstractSingleValueOhlc {
 
-	private $ohlc;
 
 	private $avgValue;
 
 	/**
 	 * @var VolumeAvg
 	 */
-	private $parent;
+	protected $parent;
 
 	const UNCOUNTABLE=true;
-
-	private function __construct(Ohlc $ohlc,$avgValue,VolumeAvg $volumeAvg) {
-		$this->ohlc=$ohlc;
-		$this->avgValue=$avgValue;
-		$this->parent=$volumeAvg;
-	}
-
-
-	public static function create( Ohlc $ohlc,$avgValue,VolumeAvg $volumeAvg){
-		return new static($ohlc,$avgValue,$volumeAvg);
-	}
 
 	/**
 	 * @return Ohlc

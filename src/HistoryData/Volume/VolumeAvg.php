@@ -9,20 +9,21 @@ namespace DrawOHLC\HistoryData\Volume;
 
 
 
-use DrawOHLC\Collection\DataCollection;
 use DrawOHLC\HistoryData\OhlcList;
+use DrawOHLC\MovingAverage\AbstractSingleValue;
+use DrawOHLC\MovingAverage\UncountableSingleValueOhlc;
 
-class VolumeAvg extends DataCollection {
+class VolumeAvg extends AbstractSingleValue {
 
 	/**
 	 * @var OhlcList
 	 */
-	private $ohlcList;
+	protected $ohlcList;
 
 	/**
 	 * @var int
 	 */
-	private $length;
+	protected $length;
 
 	private function __construct(OhlcList $ohlcList, int $length) {
 		$this->ohlcList=$ohlcList;
@@ -47,9 +48,17 @@ class VolumeAvg extends DataCollection {
 				 */
 				$position=$ohlc->getPosition();
 				$avgVolume = isset($avgArray[$position-1]) ? $avgArray[$position-1] : VolumeAvgOhlc::UNCOUNTABLE;
-				$volumeAvgOhlc= VolumeAvgOhlc::create($ohlc,$avgVolume,$this);
+				if ($avgVolume===VolumeAvgOhlc::UNCOUNTABLE){
+					$volumeAvgOhlc =UncountableSingleValueOhlc::create($avgVolume,$ohlc,$this);
+				}else{
+					$volumeAvgOhlc = VolumeAvgOhlc::create($avgVolume,$ohlc,$this);
+				}
 				$this->data[$position]=$volumeAvgOhlc;
 			}
 		}
+	}
+
+	public function getLabel() {
+		return 'avg. Volume';
 	}
 }

@@ -11,6 +11,7 @@ namespace DrawOHLC\DrawImage;
 
 use DrawOHLC\HistoryData\Volume\VolumeAvg;
 use DrawOHLC\HistoryData\Volume\VolumeAvgOhlc;
+use DrawOHLC\MovingAverage\UncountableSingleValueOhlc;
 use Nette\Utils\Image;
 
 class DrawAvgVolume extends AbstractDrawCanvas {
@@ -53,28 +54,32 @@ class DrawAvgVolume extends AbstractDrawCanvas {
 		$xCentre=round($this->drawVolume->getDrawOhlcList()->getCandelBodyWidth()/2);
 
 		$this->getImage()->setThickness($this->size);
+
 		foreach ($this->volumeAvg as $volumeAvgOhlc){
 			/**
 			 * @var VolumeAvgOhlc $volumeAvgOhlc;
 			 */
+			if(!$volumeAvgOhlc instanceof UncountableSingleValueOhlc){
 
-			$color=Image::rgb(0,0,0);
 
-			$postion=$volumeAvgOhlc->getOhlc()->getPosition();
-			$drawOhlc=$this->drawVolume->getDrawOhlcList()->getDrawOhlcByPosition($postion);
+				$color=Image::rgb(0,0,0);
 
-			if($drawOhlc->isDrawPostion()){
+				$postion=$volumeAvgOhlc->getOhlc()->getPosition();
+				$drawOhlc=$this->drawVolume->getDrawOhlcList()->getDrawOhlcByPosition($postion);
 
-				$x2=intval($drawOhlc->getAbsolutOffsetX()+$xCentre);
-				$y2=intval($this->drawVolume->getYPxByVolume($volumeAvgOhlc->getAvgValue()));
+				if($drawOhlc->isDrawPostion()){
 
-				if ( !is_null($x1)&& !is_null($x2) && !is_null($y1) && !is_null($y2))
-					$this->getImage()->line($x1,$y1,$x2,$y2,$color);
+					$x2=intval($drawOhlc->getAbsolutOffsetX()+$xCentre);
+					$y2=intval($this->drawVolume->getYPxByVolume($volumeAvgOhlc->getValue()));
 
-				$x1=$x2;
-				$y1=$y2;
+					if ( !is_null($x1)&& !is_null($x2) && !is_null($y1) && !is_null($y2))
+						$this->getImage()->line($x1,$y1,$x2,$y2,$color);
+
+					$x1=$x2;
+					$y1=$y2;
+				}
+
 			}
-
 		}
 		$this->getImage()->setThickness(1);
 

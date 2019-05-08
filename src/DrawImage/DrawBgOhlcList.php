@@ -49,6 +49,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 
 	protected $timeFrame;
 
+	protected $dateFormatTimeFrame='Y-m-d';
+
 
 	protected function __construct(DrawOhlcList $drawOhlcList) {
 		$this->drawOhlcList  =$drawOhlcList;
@@ -90,7 +92,7 @@ class DrawBgOhlcList extends DrawOhlcList {
 			$drawOhlc=$this->drawOhlcList->getDrawOhlcByPosition($postion);
 			$x=intval($drawOhlc->getX1());
 			$this->getImage()->line($x,$y1,$x,$y2,$this->colorTimeline);
-			$text=$drawOhlc->getOhlc()->getDatetime()->format('Y-m-d');
+			$text=$drawOhlc->getOhlc()->getDatetime()->format($this->dateFormatTimeFrame);
 			[$w,$h]=FontHelper::getFontBoxSize($this->fontSize,0,$this->fontPath,$text);
 
 			$this->getImage()->ttfText($this->fontSize,0,$x-$w,$y2-2,$this->colorTimeline,$this->fontPath,$text);
@@ -232,6 +234,16 @@ class DrawBgOhlcList extends DrawOhlcList {
 	 */
 	public function setTimeFrame( $timeFrame ):DrawBgOhlcList {
 		$this->timeFrame = $timeFrame;
+		return $this;
+	}
+
+	/**
+	 * @param string $dateFormatTimeFrame
+	 *
+	 * @return DrawBgOhlcList
+	 */
+	public function setDateFormatTimeFrame( string $dateFormatTimeFrame ): DrawBgOhlcList {
+		$this->dateFormatTimeFrame = $dateFormatTimeFrame;
 		return $this;
 	}
 
