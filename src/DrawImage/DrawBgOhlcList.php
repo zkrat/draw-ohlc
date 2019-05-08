@@ -93,7 +93,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 			$x=intval($drawOhlc->getX1());
 			$this->getImage()->line($x,$y1,$x,$y2,$this->colorTimeline);
 			$text=$drawOhlc->getOhlc()->getDatetime()->format($this->dateFormatTimeFrame);
-			[$w,$h]=FontHelper::getFontBoxSize($this->fontSize,0,$this->fontPath,$text);
+
+			[$w,$h]=$this->getFontBox($text);
 
 			$this->getImage()->ttfText($this->fontSize,0,$x-$w,$y2-2,$this->colorTimeline,$this->fontPath,$text);
 		}
@@ -109,7 +110,7 @@ class DrawBgOhlcList extends DrawOhlcList {
 			if($multiplicator!==1)
 				$price=round($price*$multiplicator);
 			$text=sprintf($this->units,$price);
-			[$w,$h]=FontHelper::getFontBoxSize($this->fontSize,0,$this->fontPath,$text);
+			[$w,$h]=$this->getFontBox($text);
 			$this->getImage()->ttfText($this->fontSize,0,$x2-$w,$y,$this->colorTimeline,$this->fontPath,$text);
 		}
 		$this->getImage()->rectangle($x1,$y1,$x2,$y2,$this->colorTimeline);
@@ -148,8 +149,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 		$ym=$this->getY1()+$this->fontSize+$extraSizeY+2;
 		$text=$this->getProductName();
 		$textFromTo=$from . ' - ' . $to;
-		[$w,$h]=FontHelper::getFontBoxSize($fontSize,0,$this->fontPath,$text);
-		[$w2,$h2]=FontHelper::getFontBoxSize($fontSize,0,$this->fontPath,$textFromTo);
+		[$w,$h]=$this->getFontBox($text);
+		[$w2,$h2]=$this->getFontBox($textFromTo,$fontSize);
 		$bgcolor= Image::rgb(255,255,255,10);
 
 		$fontDateSize=ceil($this->fontSize*1.2);
@@ -158,9 +159,8 @@ class DrawBgOhlcList extends DrawOhlcList {
 		$x=$this->getX1()+$extraSize;
 		$this->getImage()->filledRectangle($this->getX1(),$y,$x+$w2,$this->getY1(),$bgcolor);
 
-
-		$this->getImage()->ttfText($fontSize,0,$xm,$ym,$this->colorTimeline,$this->fontPath, $text);
-		$this->getImage()->ttfText($this->fontSize,0,$x,$y,$this->colorTimeline,$this->fontPath, $textFromTo.' '.$this->timeFrame);
+		$this->ttfText($xm,$ym,$text,$this->colorTimeline,$fontSize);
+		$this->ttfText($x,$y,$textFromTo,$this->colorTimeline);
 	}
 
 	private function getProductName(){

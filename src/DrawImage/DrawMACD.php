@@ -106,7 +106,8 @@ class DrawMACD extends AbstractDrawIndicator {
 		parent::draw();
 		$x=$this->getX1()+2;
 		$y=$this->getY1()+$this->fontSize+2;
-		$this->getImage()->ttfText($this->fontSize,0,$x,$y,$this->color,$this->fontPath,'MACD('.$this->fastLength.', '.$this->slowLength.', '.$this->signalSmoothing.')');
+		$text='MACD('.$this->fastLength.', '.$this->slowLength.', '.$this->signalSmoothing.')';
+		$this->ttfText($x,$y,$text);
 		$this->getImage()->line($this->getX1(),$this->getY2(),$this->getX2(),$this->getY2(),$this->color);
 	}
 

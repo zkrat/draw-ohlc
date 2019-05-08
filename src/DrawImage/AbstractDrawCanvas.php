@@ -9,6 +9,7 @@
 namespace DrawOHLC\DrawImage;
 
 
+use DrawOHLC\Helper\FontHelper;
 use Nette\Utils\Image;
 use Traversable;
 
@@ -339,6 +340,27 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 	}
 
 
+	protected function ttfText($x,$y,$text ,$color=null,$fontSize=null,$angle=0,$fontPath=null) {
+		if(is_null($fontSize))
+			$fontSize=$this->fontSize;
 
+		if(is_null($fontPath))
+			$fontPath=$this->fontPath;
+
+		if(is_null($color))
+			$color=$this->color;
+
+		$this->getImage()->ttfText($fontSize,$angle,$x,$y,$color,$fontPath,$text);
+	}
+
+	protected function getFontBox($text ,$fontSize=null,$angle=0,$fontPath=null):array {
+		if(is_null($fontSize))
+			$fontSize=$this->fontSize;
+
+		if(is_null($fontPath))
+			$fontPath=$this->fontPath;
+
+		return FontHelper::getFontBoxSize($fontSize,$angle,$fontPath,$text);
+	}
 
 }

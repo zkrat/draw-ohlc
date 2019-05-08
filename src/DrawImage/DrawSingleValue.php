@@ -90,7 +90,7 @@ class DrawSingleValue  extends AbstractDrawCanvas {
 		$this->getImage()->setThickness(3);
 		$this->getImage()->line($x,$y-4,$x+$width,$y-4,$this->color);
 		$this->getImage()->setThickness(1);
-		$this->getImage()->ttfText($this->fontSize,0,$x+$width+3,$y,$this->color,$this->fontPath,$label);
+		$this->ttfText($x+$width+3,$y,$label);
 
 	}
 

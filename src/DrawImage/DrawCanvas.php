@@ -33,15 +33,23 @@ class DrawCanvas extends AbstractDrawCanvas{
 			$this->color=Image::rgb(0, 0, 0);
 		else
 			$this->color=$color;
+
+
 		$this->width=$width;
 		$this->height=$height;
 	}
 
 
-	public static function createSub($offsetX,$offsetY, $width,$height,AbstractDrawCanvas $parentCanvas,$bgColor=null ) {
+	public static function createSub(AbstractDrawCanvas $parentCanvas, $width=null, $height=null, $offsetX=0,$offsetY=0, $bgColor=null) {
 
 		if(is_null($bgColor))
 			$bgColor=$parentCanvas->getBgColor();
+
+		if(is_null($width))
+			$width = $parentCanvas->getWidth();
+
+		if(is_null($height))
+			$height = $parentCanvas->getHeight();
 
 		$class = new static($width,$height,$bgColor);
 

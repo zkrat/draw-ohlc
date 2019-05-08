@@ -87,7 +87,8 @@ class DrawRSI extends AbstractDrawIndicator {
 		parent::draw();
 		$x=$this->getX1()+2;
 		$y=$this->getY1()+$this->fontSize+2;
-		$this->getImage()->ttfText($this->fontSize,0,$x,$y,$this->color,$this->fontPath,'RSI('.$this->length.')');
+		$text='RSI('.$this->length.')';
+		$this->ttfText($x,$y,$text);
 		$color=Image::rgb(0,0,0);
 		$this->getImage()->line($this->getX1(),$this->getY2(),$this->getX2(),$this->getY2(),$color);
 	}
