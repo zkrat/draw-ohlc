@@ -57,17 +57,18 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 			/**
 			 * @var Ohlc $ohlc
 			 */
-			$position=$ohlc->getPosition();
-			if(isset($arrayValues[$position-1]) && $arrayValues[$position-1]!=0){
-				$value =  $arrayValues[$position-1] ;
-				$subClass= call_user_func($this::SUB_CLASS_NAME.'::create',$value,$ohlc,$this);
-			}else{
-				$subClass=UncountableSingleValueOhlc::createUncountable($ohlc,$this);
+			if($ohlc->hasNextOhlc()){
+				$position=$ohlc->getPosition();
+				$key=$position;
+				if(isset($arrayValues[$key]) && $arrayValues[$key]!=0){
+					$value =  $arrayValues[$key] ;
+					$subClass= call_user_func($this::SUB_CLASS_NAME.'::create',$value,$ohlc,$this);
+				}else{
+					$subClass=UncountableSingleValueOhlc::createUncountable($ohlc,$this);
+				}
+				$this->data[$key]=$subClass;
 			}
-			$this->data[$position]=$subClass;
-
 		}
-
 	}
 
 

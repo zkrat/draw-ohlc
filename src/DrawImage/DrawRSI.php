@@ -29,6 +29,12 @@ class DrawRSI extends AbstractDrawIndicator {
 	 */
 	protected $colorBg;
 
+	/**
+	 * @return RSI
+	 */
+	public function getRsi(): RSI {
+		return $this->rsi;
+	}
 
 
 	protected function loadIndicator(){
@@ -75,16 +81,18 @@ class DrawRSI extends AbstractDrawIndicator {
 			 * @var RSIOhlc $rsiOhlc
 			 */
 
-			$postion=$rsiOhlc->getOhlc()->getPosition();
-			$drawOhlc=$this->drawOhlcList->getDrawOhlcByPosition($postion);
+			$position=$rsiOhlc->getOhlc()->getPosition();
+			$drawOhlc=$this->drawOhlcList->getDrawOhlcByPosition($position);
 
 			if($drawOhlc->isDrawPostion() && !$rsiOhlc instanceof UncountableSingleValueOhlc){
 
 				$x2=$drawOhlc->getOffsetX();
 
 				$y2=$this->countY($rsiOhlc->getValue());
-				if ( !is_null($x1)&& !is_null($x2) && !is_null($y1) && !is_null($y2))
+				if ( !is_null($x1)&& !is_null($x2) && !is_null($y1) && !is_null($y2)){
 					$this->getImage()->line($x1,$y1,$x2,$y2,$this->color);
+					$this->ttfText($x2,$y2,$rsiOhlc->getPosition());
+				}
 
 				$x1=$x2;
 				$y1=$y2;

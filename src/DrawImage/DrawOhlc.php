@@ -76,7 +76,7 @@ class DrawOhlc extends AbstractDrawCanvas {
 			$this->getImage()->filledRectangle($wickX1,$wickY1,$wickX2,$wickY2,$black);
 			//Candel body
 			$this->getImage()->filledRectangle($x1,$y1,$x2,$y2,$color);
-
+			$this->ttfText($x2,$y2,$this->getOhlc()->getPosition());
 
 
 		}
