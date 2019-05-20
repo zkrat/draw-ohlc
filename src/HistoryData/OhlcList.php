@@ -287,4 +287,12 @@ class OhlcList extends DataCollection {
 		return $this->timeFrameLength;
 	}
 
+	public function duplicateLast($num=1){
+		$ohlc =$this->getLastOhlc();
+		for($i=1;$i<=$num;$i++){
+			UnDrawOhlc::createFromOhlc($ohlc,$this);
+		}
+
+	}
+
 }
