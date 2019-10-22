@@ -67,7 +67,7 @@ class DrawBorder extends AbstractDrawCanvas {
 	/**
 	 * @param array $bgColor
 	 */
-	public function setBgColor( array $bgColor ): DrawBorder {
+	public function setBgColor( array $bgColor ): AbstractDrawCanvas {
 		$this->bgColor = $bgColor;
 		return $this;
 	}
@@ -75,7 +75,7 @@ class DrawBorder extends AbstractDrawCanvas {
 	/**
 	 * @param array $borderColor
 	 */
-	public function setBorderColor( array $borderColor ): DrawBorder {
+	public function setBorderColor( array $borderColor ): AbstractDrawCanvas {
 		$this->borderColor = $borderColor;
 		return $this;
 	}

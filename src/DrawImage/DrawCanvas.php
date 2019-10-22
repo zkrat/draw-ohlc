@@ -23,27 +23,15 @@ class DrawCanvas extends AbstractDrawCanvas{
 	private $showGeneratedTime=FALSE;
 
 
-	private function __construct($width,$height,array $bgColor=null,array $color=null) {
-		if(is_null($bgColor))
-			$this->bgColor=Image::rgb(255, 255, 255);
-		else
-			$this->bgColor=$bgColor;
-
-		if(is_null($color))
-			$this->color=Image::rgb(0, 0, 0);
-		else
-			$this->color=$color;
-
+	private function __construct($width,$height) {
 
 		$this->width=$width;
 		$this->height=$height;
 	}
 
 
-	public static function createSub(AbstractDrawCanvas $parentCanvas, $width=null, $height=null, $offsetX=0,$offsetY=0, $bgColor=null) {
+	public static function createSub(AbstractDrawCanvas $parentCanvas, $width=null, $height=null, $offsetX=0,$offsetY=0) {
 
-		if(is_null($bgColor))
-			$bgColor=$parentCanvas->getBgColor();
 
 		if(is_null($width))
 			$width = $parentCanvas->getWidth();
@@ -51,7 +39,7 @@ class DrawCanvas extends AbstractDrawCanvas{
 		if(is_null($height))
 			$height = $parentCanvas->getHeight();
 
-		$class = new static($width,$height,$bgColor);
+		$class = new static($width,$height);
 
 		$parentCanvas->addDrawCanvas($class);
 		$class->setOffset($offsetX,$offsetY);
@@ -59,8 +47,8 @@ class DrawCanvas extends AbstractDrawCanvas{
 	}
 
 
-	public static function createCanvas( $width,$height,array $bgColor=null,array $color=null ) {
-		$class= new static($width,$height,$bgColor,$color);
+	public static function createCanvas( $width,$height ) {
+		$class= new static($width,$height);
 		$class->initImage();
 		return $class;
 	}

@@ -11,7 +11,6 @@ namespace DrawOHLC\DrawImage;
 
 use DrawOHLC\ColorSchema\AbstractColorSchema;
 use DrawOHLC\ColorSchema\Exception\ColorSchemaException;
-use DrawOHLC\DrawImage\Exception\DrawCanvasException;
 use DrawOHLC\Helper\FontHelper;
 use Nette\Utils\Image;
 use Traversable;
@@ -29,10 +28,6 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 
 	protected $fontPath;
 
-	/**
-	 * @var array
-	 */
-	protected $color;
 	/**
 	 * @var bool
 	 */
@@ -78,6 +73,8 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 	 * @var IDrawCanvas
 	 */
 	protected $parent;
+
+	protected $color;
 
 	/**
 	 * @var AbstractColorSchema
@@ -200,6 +197,14 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 
 	public function getSpaceBottomSum(): int {
 		return array_sum($this->spaceBottom);
+	}
+
+	/**
+	 * @param array $bgColor
+	 */
+	public function setBgColor(array $bgColor ): AbstractDrawCanvas {
+		$this->bgColor = $bgColor;
+		return  $this;
 	}
 
 	protected function setOffset($offsetX,$offsetY){

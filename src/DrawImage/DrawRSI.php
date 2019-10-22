@@ -25,15 +25,22 @@ class DrawRSI extends AbstractDrawIndicator {
 	private $topLine=70;
 	private $bottomLine=30;
 	/**
-	 * @var array
+	 * @var array|NULL
 	 */
-	protected $colorBg;
+	protected $bgColor;
 
 	/**
 	 * @return RSI
 	 */
 	public function getRsi(): RSI {
 		return $this->rsi;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getBgColor(): ?array {
+		return $this->bgColor;
 	}
 
 
@@ -44,8 +51,6 @@ class DrawRSI extends AbstractDrawIndicator {
 
 	public static function create(int $height=30,DrawOhlcList $drawOhlcList,int $length=14) {
 		$class= new static($height,$drawOhlcList,$length);
-		$class->color=Image::rgb(160,30, 160);
-		$class->colorBg=Image::rgb(241, 193, 241);
 		return $class;
 	}
 
@@ -68,7 +73,7 @@ class DrawRSI extends AbstractDrawIndicator {
 		$pxRatio=$pxHeight/100;
 		$y1=intval($this->getY2()-$pxRatio*$this->topLine);
 		$y2=intval($this->getY2()-$pxRatio*$this->bottomLine);
-		$this->getImage()->filledRectangle($this->getX1(),$y1,$this->getX2(),$y2,$this->colorBg);
+		$this->getImage()->filledRectangle($this->getX1(),$y1,$this->getX2(),$y2,$this->bgColor);
 		$this->getImage()->line($this->getX1(),$y1,$this->getX2(),$y1,$this->color);
 		$this->getImage()->line($this->getX1(),$y2,$this->getX2(),$y2,$this->color);
 		$x1=$x2=$y1=$y2=null;
@@ -152,12 +157,12 @@ class DrawRSI extends AbstractDrawIndicator {
 
 
 	/**
-	 * @param array $colorBg
+	 * @param array $bgColor
 	 *
 	 * @return DrawRSI
 	 */
-	public function setColorBg( array $colorBg ): DrawRSI {
-		$this->colorBg = $colorBg;
+	public function setBgColor( array $bgColor ): AbstractDrawCanvas {
+		$this->bgColor = $bgColor;
 		return $this;
 	}
 
