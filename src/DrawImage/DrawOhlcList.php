@@ -11,7 +11,7 @@ namespace DrawOHLC\DrawImage;
 
 use DrawOHLC\HistoryData\Ohlc;
 use DrawOHLC\HistoryData\OhlcList;
-use Helper\Math;
+use DrawOHLC\Helper\Math;
 use Nette\Utils\Image;
 
 class DrawOhlcList extends AbstractDrawCanvas {

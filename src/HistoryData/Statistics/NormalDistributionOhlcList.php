@@ -9,7 +9,6 @@
 namespace Models\HistoryData\Statistics;
 
 
-use Helper\Math;
 use Models\HistoryData\Ohlc;
 use Models\HistoryData\OhlcList;
 
