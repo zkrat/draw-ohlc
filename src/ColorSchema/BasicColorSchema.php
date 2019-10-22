@@ -4,9 +4,9 @@
 namespace DrawOHLC\ColorSchema;
 
 
-class DefaultColorSchema extends BasicColorSchema {
+class BasicColorSchema extends AbstractColorSchema {
 
 	protected function configure() {
-
+		parent::configure();
 	}
 }

@@ -15,6 +15,8 @@ abstract class AbstractColorSchema {
 
 	private $debug=false;
 
+	private $configureSetup=FALSE;
+
 	/**
 	 * @return bool
 	 */
@@ -42,6 +44,9 @@ abstract class AbstractColorSchema {
 	public static function create():AbstractColorSchema{
 		$class= new static();
 		$class->configure();
+		if ($class->configureSetup==FALSE){
+			throw new ColorSchemaException(ColorSchemaException::MSG_MISSING_PARENT_CONFIGURATION,ColorSchemaException::MISSING_PARENT_CONFIGURATION);
+		}
 		return  $class;
 	}
 
@@ -56,7 +61,7 @@ abstract class AbstractColorSchema {
 				$class->$classMethod($this->colorArray[$className][$classMethod]);
 			}elseif($this->strict===TRUE){
 				if ($this->debug){
-					echo "<pre>\$this->colorArray[$className][$classMethod]</pre><br>";
+					echo "<pre>\$this->colorArray['$className']['$classMethod']</pre><br>";
 				}
 				if(!method_exists($class,$getClassMethod)){
 					$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$getClassMethod,$className);
@@ -85,6 +90,8 @@ abstract class AbstractColorSchema {
 		return $colorList;
 	}
 
-	abstract protected function configure();
+	protected function configure(){
+		$this->configureSetup=TRUE;
+	}
 
 }

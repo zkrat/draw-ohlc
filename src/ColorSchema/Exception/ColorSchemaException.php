@@ -10,4 +10,6 @@ class ColorSchemaException extends \Exception {
 	const MSG_COLOR_SCHEMA_NOT_SET='Color schema not set';
 	const COLOR_SCHEMA_NOT_SET=4;
 
+	const MSG_MISSING_PARENT_CONFIGURATION='Missing parent::configure();';
+	const MISSING_PARENT_CONFIGURATION=6;
 }
