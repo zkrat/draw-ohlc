@@ -47,8 +47,8 @@ class DrawOhlc extends AbstractDrawCanvas {
 		return $this->getOffsetX();
 	}
 
-	public function getOhlcXCenter(){
-		return round($this->getAbsolutOffsetX() + $this->drawOhlcList->getWickOffset() + $this->drawOhlcList->getWickWidth()/2);
+	public function getOhlcXCenter():int{
+		return intval(round($this->getAbsolutOffsetX() + $this->drawOhlcList->getWickOffset() + $this->drawOhlcList->getWickWidth()/2));
 	}
 
 	public function draw() {
@@ -77,7 +77,7 @@ class DrawOhlc extends AbstractDrawCanvas {
 			$this->getImage()->filledRectangle($wickX1,$wickY1,$wickX2,$wickY2,$black);
 			//Candel body
 			$this->getImage()->filledRectangle($x1,$y1,$x2,$y2,$color);
-			$this->ttfText($x1+2,max($y2,$y1)-1,$this->getOhlc()->getPosition());
+//			$this->ttfText($x1+2,max($y2,$y1)-1,$this->getOhlc()->getPosition());
 
 			if($this->getOhlc()->getPosition()==2){
 				$this->ttfText($x2,$y2+100,$this->getOhlc()->getPosition().':'.$this->getOhlc()->getLow());
