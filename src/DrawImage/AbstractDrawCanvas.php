@@ -340,7 +340,7 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 	}
 
 
-	protected function ttfText($x,$y,$text ,$color=null,$fontSize=null,$angle=0,$fontPath=null) {
+	protected function ttfText($x,$y,string $text ,$color=null,$fontSize=null,$angle=0,$fontPath=null) {
 		if(is_null($fontSize))
 			$fontSize=$this->fontSize;
 
@@ -349,6 +349,9 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 
 		if(is_null($color))
 			$color=$this->color;
+
+		if (is_null($color))
+			$color= Image::rgb(255,255,255);
 
 		$this->getImage()->ttfText($fontSize,$angle,$x,$y,$color,$fontPath,$text);
 	}
