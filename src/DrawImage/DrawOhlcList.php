@@ -141,14 +141,14 @@ class DrawOhlcList extends AbstractDrawCanvas {
 	/**
 	 * @return array
 	 */
-	public function getColorBearish(): array {
+	public function getColorBearish(): ?array {
 		return $this->colorBerish;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getColorBullish(): array {
+	public function getColorBullish(): ?array {
 		return $this->colorBullish;
 	}
 

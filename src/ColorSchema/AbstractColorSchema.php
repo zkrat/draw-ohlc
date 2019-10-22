@@ -4,19 +4,87 @@
 namespace DrawOHLC\ColorSchema;
 
 
+use DrawOHLC\ColorSchema\Exception\ColorSchemaException;
 use DrawOHLC\DrawImage\AbstractDrawCanvas;
 
-class AbstractColorSchema {
+abstract class AbstractColorSchema {
 
 	protected $colorArray=[];
 
-	public function getBgColor(AbstractDrawCanvas $class){
-		$className = get_class($class);
-		dumpe($className,get_class_methods($className));
-		if (isset($this->colorArray[$className]['BgColor'])){
+	private $strict=false;
 
+	private $debug=false;
+
+	/**
+	 * @return bool
+	 */
+	public function isDebug(): bool {
+		return $this->debug;
+	}
+
+	/**
+	 * @param bool $debug
+	 */
+	public function setDebug( bool $debug ): void {
+		$this->debug = $debug;
+	}
+
+
+
+
+	public function setStrict(){
+		$this->strict=true;
+	}
+
+	protected function __construct() {
+	}
+
+	public static function create():AbstractColorSchema{
+		$class= new static();
+		$class->configure();
+		return  $class;
+	}
+
+	public function setColor(AbstractDrawCanvas $class){
+		$className = get_class($class);
+		$classMethods =$this->getColorMethods($className);
+		foreach ($classMethods as $classMethod){
+			$getClassMethod=str_replace('set','get',$classMethod);
+
+			if (!method_exists($class,$getClassMethod)  ||(method_exists($class,$getClassMethod)  && is_null($class->$getClassMethod())) )
+			if (isset($this->colorArray[$className][$classMethod])){
+				$class->$classMethod($this->colorArray[$className][$classMethod]);
+			}elseif($this->strict===TRUE){
+				if ($this->debug){
+					echo "<pre>\$this->colorArray[$className][$classMethod]</pre><br>";
+				}
+				if(!method_exists($class,$getClassMethod)){
+					$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$getClassMethod,$className);
+				}else{
+					$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$classMethod,$className);
+				}
+
+				throw new ColorSchemaException($msg,ColorSchemaException::METHOD_COLOR_NOT_EXISTS);
+			}
 		}
 
+
 	}
+
+	public function getColorMethods(string $className){
+		$classArray=get_class_methods($className);
+
+		$colorList=[];
+		foreach ($classArray as $classMethod){
+			$lclassMethod=strtolower($classMethod);
+
+			if(strpos($lclassMethod,'colorschema')===FALSE && strpos($lclassMethod,'color')!==FALSE && strpos($lclassMethod,'set')!==FALSE){
+				$colorList[]=$classMethod;
+			}
+		}
+		return $colorList;
+	}
+
+	abstract protected function configure();
 
 }

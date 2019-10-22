@@ -9,6 +9,9 @@
 namespace DrawOHLC\DrawImage;
 
 
+use DrawOHLC\ColorSchema\AbstractColorSchema;
+use DrawOHLC\ColorSchema\Exception\ColorSchemaException;
+use DrawOHLC\DrawImage\Exception\DrawCanvasException;
 use DrawOHLC\Helper\FontHelper;
 use Nette\Utils\Image;
 use Traversable;
@@ -76,6 +79,10 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 	 */
 	protected $parent;
 
+	/**
+	 * @var AbstractColorSchema
+	 */
+	protected $colorSchema=null;
 
 	public function addDrawCanvas(AbstractDrawCanvas $drawCanvas){
 		$drawCanvas->setParent($this);
@@ -85,12 +92,47 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 
 
 	public function draw(){
+		$colorSchema=$this->hasColorSchema() ? $this->getColorSchema() : null;
 		foreach ($this->data as $drawCanvas){
 			/**
 			 * @var AbstractDrawCanvas $drawCanvas
 			 */
+			$colorSchema->setColor($drawCanvas);
 			$drawCanvas->draw();
 		}
+	}
+
+	/**
+	 * @param AbstractColorSchema $colorSchema
+	 *
+	 * @return AbstractDrawCanvas
+	 */
+	public function setColorSchema( AbstractColorSchema $colorSchema ): AbstractDrawCanvas {
+		if($this->hasParent())
+			$class=$this->getParent()->setColorSchema($colorSchema);
+		else
+			$this->colorSchema = $colorSchema;
+
+		return $this;
+	}
+	public function hasColorSchema():bool{
+		if($this->colorSchema instanceof AbstractColorSchema)
+			return true;
+		if($this->hasParent()){
+			$return = $this->getParent()->hasColorSchema();
+			if($return)
+				$this->colorSchema =$this->getParent()->getColorSchema();
+			return  $return;
+		}else{
+			return  FALSE;
+		}
+
+	}
+
+	public function getColorSchema():AbstractColorSchema{
+		if ($this->hasColorSchema())
+			return  $this->colorSchema;
+		throw new ColorSchemaException(ColorSchemaException::MSG_COLOR_SCHEMA_NOT_SET,ColorSchemaException::COLOR_SCHEMA_NOT_SET);
 	}
 
 	public function setParent(AbstractDrawCanvas $drawCanvas  ){
@@ -333,9 +375,9 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 	}
 
 	/**
-	 * @return array
+	 * @return array|null
 	 */
-	public function getColor(): array {
+	public function getColor(): ?array {
 		return $this->color;
 	}
 
