@@ -397,9 +397,6 @@ class AbstractDrawCanvas implements \Countable, \IteratorAggregate{
 		if(is_null($color))
 			$color=$this->color;
 
-		if (is_null($color))
-			$color= Image::rgb(255,255,255);
-
 		$this->getImage()->ttfText($fontSize,$angle,$x,$y,$color,$fontPath,$text);
 	}
 

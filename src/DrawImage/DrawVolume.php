@@ -84,12 +84,13 @@ class DrawVolume extends AbstractDrawIndicator {
 		}
 		$x=$this->getX1();
 		$y=$this->getY1()+$size+2;
-		$black=Image::rgb(0,0,0);
+		// todo: font color ?? done?
+
 		$text='Max. volume: '.$volume;
-		$this->ttfText($x,$y,$text,$black,$size);
+		$this->ttfText($x,$y,$text,$this->getColor(),$size);
 //		$this->getImage()->ttfText($size,0,$x,$y,$black,$this->fontPath,$text);
 		parent::draw();
-		$this->getImage()->line($this->getX1(),$this->getY2(),$this->getX2(),$this->getY2(),$this->color);
+		$this->getImage()->line($this->getX1(),$this->getY2(),$this->getX2(),$this->getY2(),$this->getColor());
 	}
 
 	/**

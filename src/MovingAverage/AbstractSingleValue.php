@@ -127,4 +127,8 @@ abstract class AbstractSingleValue extends DataCollection implements IMovingAver
 		return $this->ohlcList;
 	}
 
+	public function getSubClassName(){
+		return $this::SUB_CLASS_NAME;
+	}
+
 }

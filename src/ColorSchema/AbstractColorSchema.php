@@ -6,6 +6,7 @@ namespace DrawOHLC\ColorSchema;
 
 use DrawOHLC\ColorSchema\Exception\ColorSchemaException;
 use DrawOHLC\DrawImage\AbstractDrawCanvas;
+use DrawOHLC\DrawImage\DrawSingleValue;
 
 abstract class AbstractColorSchema {
 
@@ -51,25 +52,36 @@ abstract class AbstractColorSchema {
 	}
 
 	public function setColor(AbstractDrawCanvas $class){
-		$className = get_class($class);
+		if($class instanceof DrawSingleValue){
+			$className=$class->getSingleValue()->getSubClassName();
+		}else{
+			$className= get_class($class);
+		}
+		$className= get_class($class);
+
+
 		$classMethods =$this->getColorMethods($className);
 		foreach ($classMethods as $classMethod){
 			$getClassMethod=str_replace('set','get',$classMethod);
 
-			if (!method_exists($class,$getClassMethod)  ||(method_exists($class,$getClassMethod)  && is_null($class->$getClassMethod())) )
-			if (isset($this->colorArray[$className][$classMethod])){
-				$class->$classMethod($this->colorArray[$className][$classMethod]);
-			}elseif($this->strict===TRUE){
-				if ($this->debug){
-					echo "<pre>\$this->colorArray['$className']['$classMethod']</pre><br>";
-				}
-				if(!method_exists($class,$getClassMethod)){
-					$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$getClassMethod,$className);
-				}else{
-					$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$classMethod,$className);
-				}
+			if (!method_exists($class,$getClassMethod)  ||(method_exists($class,$getClassMethod)  && is_null($class->$getClassMethod())) ){
 
-				throw new ColorSchemaException($msg,ColorSchemaException::METHOD_COLOR_NOT_EXISTS);
+
+				if (isset($this->colorArray[$className][$classMethod])){
+					$class->$classMethod($this->colorArray[$className][$classMethod]);
+				}elseif($this->strict===TRUE){
+					if ($this->debug){
+						$classNoNameSpace=substr($className,strripos($className,'\\')+1);
+						echo "<pre>\$this->colorArray[$classNoNameSpace::class]['$classMethod']</pre><br>";
+					}
+					if(!method_exists($class,$getClassMethod)){
+						$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$getClassMethod,$className);
+					}else{
+						$msg=sprintf(ColorSchemaException::MSG_METHOD_COLOR_NOT_EXISTS,$classMethod,$className);
+					}
+
+					throw new ColorSchemaException($msg,ColorSchemaException::METHOD_COLOR_NOT_EXISTS);
+				}
 			}
 		}
 

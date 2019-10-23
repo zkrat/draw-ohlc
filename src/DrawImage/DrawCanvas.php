@@ -64,11 +64,9 @@ class DrawCanvas extends AbstractDrawCanvas{
 		if($colorSchema instanceof AbstractColorSchema)
 			$colorSchema->setColor($this);
 
-		if ($this->bgColor!==DrawCanvas::TRANSPARENT_COLOR && $this->hasParent()){
 
+		$this->getImage()->filledRectangle($this->getX1(),$this->getY1(),$this->getX2(),$this->getY2(),$this->getBgColor());
 
-			$this->getImage()->filledRectangle($this->getX1(),$this->getY1(),$this->getX2(),$this->getY2(),$this->getBgColor());
-		}
 
 		parent::draw();
 	}
@@ -87,6 +85,7 @@ class DrawCanvas extends AbstractDrawCanvas{
 			$this->getImage()->ttfText(min($maxSize,8),0,$this->getX1()+2,$this->getY2()-2,$this->color,$this->fontPath, 'generated in:'.$time . 'ms');
 		}
 		if(is_null($toFile)){
+			//dumpe($this,__METHOD__);
 			$this->getImage()->send(Image::PNG,80);
 			die;
 		}

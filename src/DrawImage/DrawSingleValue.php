@@ -34,7 +34,7 @@ class DrawSingleValue  extends AbstractDrawCanvas {
 	private function __construct(AbstractSingleValue $singleValue, DrawOhlcList $drawOhlcList ) {
 		$this->singleValue=$singleValue;
 		$this->drawOhlcList=$drawOhlcList;
-		$this->color=Image::rgb(0,0,0);
+
 		$drawOhlcList->addDrawCanvas($this);
 		$multipicator=$this->drawOhlcList->getOhlcList()->getMultipicator();
 
@@ -110,12 +110,11 @@ class DrawSingleValue  extends AbstractDrawCanvas {
 	}
 
 	/**
-	 * @return array
+	 * @return AbstractSingleValue
 	 */
-	public function getColor(): array {
-		return $this->color;
+	public function getSingleValue(): AbstractSingleValue {
+		return $this->singleValue;
 	}
-
 
 
 }

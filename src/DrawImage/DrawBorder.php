@@ -36,8 +36,6 @@ class DrawBorder extends AbstractDrawCanvas {
 
 	public static function create(AbstractDrawCanvas $parentDrawCanvas,$margin=2,$border=2,$padding=2) {
 		$class = new static($margin,$border,$padding);
-		$class->borderColor=Image::rgb(0,0,0);
-		$class->bgColor=Image::rgb(255,255,255);
 		$parentDrawCanvas->addDrawCanvas($class);
 		$class->setBorderOffset();
 		return $class;

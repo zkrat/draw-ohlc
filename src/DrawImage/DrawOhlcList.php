@@ -69,10 +69,6 @@ class DrawOhlcList extends AbstractDrawCanvas {
 
 	protected function __construct(OhlcList $ohlcList,AbstractDrawCanvas $parent=null) {
 		$this->ohlcList     =$ohlcList;
-		$this->colorBerish  =Image::rgb(255,0,0);
-		$this->colorBullish =Image::rgb(0,255,0);
-
-		$this->wickColor=Image::rgb(90,90,90);
 		if(!is_null($parent))
 			$parent->addDrawCanvas($this);
 

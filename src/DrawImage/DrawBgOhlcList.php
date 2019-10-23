@@ -54,7 +54,6 @@ class DrawBgOhlcList extends DrawOhlcList {
 
 	protected function __construct(DrawOhlcList $drawOhlcList) {
 		$this->drawOhlcList  =$drawOhlcList;
-		$this->colorTimeline =Image::rgb(99,99,99);
 		$drawOhlcList->addDrawCanvas($this);
 	}
 
@@ -151,13 +150,14 @@ class DrawBgOhlcList extends DrawOhlcList {
 		$textFromTo=$from . ' - ' . $to;
 		[$w,$h]=$this->getFontBox($text);
 		[$w2,$h2]=$this->getFontBox($textFromTo,$fontSize);
-		$bgcolor= Image::rgb(255,255,255,10);
 
+
+		;
 		$fontDateSize=ceil($this->fontSize*1.2);
 		$extraSize=intval(round($this->fontSize*0.25,0,PHP_ROUND_HALF_UP));
 		$y=intval($this->getY1()+$this->fontSize+$fontDateSize+$this->fontSize+$extraSizeY+2);
 		$x=$this->getX1()+$extraSize;
-		$this->getImage()->filledRectangle($this->getX1(),$y,$x+$w2,$this->getY1(),$bgcolor);
+		$this->getImage()->filledRectangle($this->getX1(),$y,$x+$w2,$this->getY1(),$this->getBgColor());
 
 		$this->ttfText($xm,$ym,$text,$this->colorTimeline,$fontSize);
 		$this->ttfText($x,$y,$textFromTo,$this->colorTimeline);
@@ -245,6 +245,20 @@ class DrawBgOhlcList extends DrawOhlcList {
 	public function setDateFormatTimeFrame( string $dateFormatTimeFrame ): DrawBgOhlcList {
 		$this->dateFormatTimeFrame = $dateFormatTimeFrame;
 		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getColorTimeline(): ?array {
+		return $this->colorTimeline;
+	}
+
+	/**
+	 * @param array $colorTimeline
+	 */
+	public function setColorTimeline( array $colorTimeline ): void {
+		$this->colorTimeline = $colorTimeline;
 	}
 
 

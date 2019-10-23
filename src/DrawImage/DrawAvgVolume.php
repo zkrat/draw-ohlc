@@ -12,7 +12,6 @@ namespace DrawOHLC\DrawImage;
 use DrawOHLC\HistoryData\Volume\VolumeAvg;
 use DrawOHLC\HistoryData\Volume\VolumeAvgOhlc;
 use DrawOHLC\MovingAverage\UncountableSingleValueOhlc;
-use Nette\Utils\Image;
 
 class DrawAvgVolume extends AbstractDrawCanvas {
 
@@ -62,7 +61,6 @@ class DrawAvgVolume extends AbstractDrawCanvas {
 			if(!$volumeAvgOhlc instanceof UncountableSingleValueOhlc){
 
 
-				$color=Image::rgb(0,0,0);
 
 				$postion=$volumeAvgOhlc->getOhlc()->getPosition();
 				$drawOhlc=$this->drawVolume->getDrawOhlcList()->getDrawOhlcByPosition($postion);
@@ -73,7 +71,7 @@ class DrawAvgVolume extends AbstractDrawCanvas {
 					$y2=intval($this->drawVolume->getYPxByVolume($volumeAvgOhlc->getValue()));
 
 					if ( !is_null($x1)&& !is_null($x2) && !is_null($y1) && !is_null($y2))
-						$this->getImage()->line($x1,$y1,$x2,$y2,$color);
+						$this->getImage()->line($x1,$y1,$x2,$y2,$this->getColor());
 
 					$x1=$x2;
 					$y1=$y2;

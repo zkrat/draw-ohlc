@@ -9,6 +9,7 @@
 namespace DrawOHLC\DrawImage;
 
 
+use DrawOHLC\ColorSchema\AbstractColorSchema;
 use DrawOHLC\Indicators\MACD\MACD;
 use DrawOHLC\Indicators\MACD\MACDOhlc;
 use Nette\Utils\Image;
@@ -34,8 +35,19 @@ class DrawMACD extends AbstractDrawIndicator {
 	 */
 	private $macd;
 
+	/**
+	 * @var array
+	 */
 	protected $fastColor;
+
+	/**
+	 * @var array
+	 */
 	protected $slowColor;
+
+	/**
+	 * @var array
+	 */
 	protected $histogramColor;
 
 
@@ -45,14 +57,10 @@ class DrawMACD extends AbstractDrawIndicator {
 
 	public static function create(int $height=30,DrawOhlcList $drawOhlcList, int $fastLength=12, int $slowLength=26,int $signalSmoothing=9) {
 		$class= new static($height,$drawOhlcList);
-		$class->fastColor=Image::rgb(255,0,0);
-		$class->slowColor=Image::rgb(0,0,255);
-		$class->histogramColor=Image::rgb(0,255,0);
 		$class->slowLength=$slowLength;
 		$class->fastLength=$fastLength;
 		$class->signalSmoothing=$signalSmoothing;
 		$class->macd = MACD::create($class->drawOhlcList->getOhlcList(),$class->fastLength,$class->slowLength,$class->signalSmoothing);
-		$class->color = Image::rgb(0,0,0);
 		return $class;
 	}
 
@@ -127,5 +135,52 @@ class DrawMACD extends AbstractDrawIndicator {
 	public function getMacd(): MACD {
 		return $this->macd;
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getFastColor(): ?array {
+		return $this->fastColor;
+	}
+
+	/**
+	 * @param array $fastColor
+	 */
+	public function setFastColor( array $fastColor ): void {
+		$this->fastColor = $fastColor;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getSlowColor(): ?array {
+		return $this->slowColor;
+	}
+
+	/**
+	 * @param array $slowColor
+	 */
+	public function setSlowColor( array $slowColor ): void {
+		$this->slowColor = $slowColor;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getHistogramColor(): ?array {
+		return $this->histogramColor;
+	}
+
+	/**
+	 * @param array $histogramColor
+	 */
+	public function setHistogramColor( array $histogramColor ): void {
+		$this->histogramColor = $histogramColor;
+	}
+
+
+
+
+
 
 }
